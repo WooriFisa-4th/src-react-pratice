@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useReducer } = React;
+        const reducer1 = (state, action) => {
+            switch(action.type) {
+                case 'INCREASE' :
+                    return state + action.data;
+                case 'DECREASE' :
+                    return state - action.data;
+                case 'RESET' :
+                    return 0;
+            }
+        }
+        const Counter = () => {
+            const [count, dispatch] = useReducer(reducer1, 0)
+
+            const increase = () => dispatch({ type: 'INCREASE', data: 1 });
+            const decrease = () => dispatch({ type: 'DECREASE', data: 1 });
+            const reset = () => dispatch({ type: 'RESET' });
+
+            return (
+                <>
+                    <p>카운트: {count}</p>
+                    <button onClick={increase}>증가</button>
+                    <button onClick={decrease}>감소</button>
+                    <button onClick={reset}>초기화</button>
+                </>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Counter />);
+    </script>
+</body>
+</html>
