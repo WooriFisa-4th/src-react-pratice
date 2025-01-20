@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- JSX를 사용하기 위해 필요한 의존성(Babel) 추가 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        
+        // 섭씨를 화씨로 변환해주는 함수 toCelsius(섭씨 온도값)
+        function toFahrenheit(temperature) {
+            return (temperature * 9 / 5) + 32;
+        }
+        // 화씨를 섭씨로 변환해주는 함수 toCelsius(화씨 온도값)
+        function toCelsius(temperature) {
+            return (temperature - 32) * 5 / 9;
+        }
+
+        const View = () => {
+            return (
+                <div>
+                    <InputBox what={true} />
+                    <InputBox what={false} />
+                </div>
+            )
+        }
+
+        const InputBox = ({what}) => {
+
+            const [celsius , setCelsius] = useState('');
+            const [fahrenheit , setFahrenheit] = useState('');
+        
+            const changeCelsiusToFahrenheit = (e) => {
+                setCelsius(e.target.value);
+                setFahrenheit(toFahrenheit(e.target.value));
+                document.getElementById('fah').value = toFahrenheit(e.target.value);
+            }
+        
+            const changeFahrenheitToCelsius = (e) => {
+                setFahrenheit(e.target.value);
+                setCelsius(toCelsius(e.target.value));
+                document.getElementById('cel').value = toCelsius(e.target.value);
+            }
+
+            return (
+                <>
+                    <section className= "border-4">
+                        {what ? <div>섭씨온도를 입력하세요.</div> : <div>화씨온도를 입력하세요.</div>}
+                        <input className="border-4" id={what ? 'cel' : 'fah'} type="text" onChange={what ? changeCelsiusToFahrenheit : changeFahrenheitToCelsius} value={what ? celsius : fahrenheit} />                        
+                    </section>
+                </>
+            )
+        }
+
+        const rootDiv = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootDiv);
+        root.render(<View />);
+
+    </script>
+</body>
+</html>

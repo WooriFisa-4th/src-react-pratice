@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // 이미지 태그
+        const imageSrc = "https://picsum.photos/id/30/200/200";
+        const imageDescription = "컵";
+        const imagePrice = 5000;
+
+        const ImageComponent = props => {
+            console.log(props);
+            return (
+                <div>
+                    <img src={props.image} alt=""/>
+                    <h2>{props.description}</h2>
+                    <h2>{props.price} 원</h2>
+                </div>
+            )
+        }
+
+        const rootDiv = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootDiv);
+        root.render();
+        root.render(
+            <ImageComponent 
+                image={imageSrc}
+                description={imageDescription}
+                price={imagePrice}
+            />
+
+        );
+        
+    </script>
+</body>
+</html>
